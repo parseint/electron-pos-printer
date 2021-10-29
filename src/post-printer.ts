@@ -66,7 +66,13 @@ export class PosPrinter {
                 slashes: true,
                 // baseUrl: 'dist'
             }));*/
-            mainWindow.loadFile(options.pathTemplate || (__dirname + '/pos.html'));
+            if (options.pathTemplate){
+                mainWindow.loadURL(options.pathTemplate)
+            }else{
+                mainWindow.loadFile(__dirname + '/pos.html');
+            }
+            
+            
             mainWindow.webContents.on('did-finish-load', async () => {
                 // get system printers
                 // const system_printers = mainWindow.webContents.getPrinters();

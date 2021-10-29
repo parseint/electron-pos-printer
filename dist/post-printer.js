@@ -103,7 +103,7 @@ var PosPrinter = /** @class */ (function () {
                 slashes: true,
                 // baseUrl: 'dist'
             }));*/
-            mainWindow.loadFile(__dirname + '/pos.html');
+            mainWindow.loadFile(options.pathTemplate || (__dirname + '/pos.html'));
             mainWindow.webContents.on('did-finish-load', function () { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     switch (_a.label) {
