@@ -4,6 +4,7 @@
 ![Issues](https://img.shields.io/github/issues/Hubertformin/electron-pos-printer)
 
 # Electron-pos-printer
+This is a fork from https://github.com/Hubertformin/electron-pos-printer
 An electron printer plugin, currently supports 58mm, 
 requires electron >= 4.x.x.
 

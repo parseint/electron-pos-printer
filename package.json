@@ -1,5 +1,5 @@
 {
-  "name": "electron-pos-printer",
+  "name": "electron-pos-printer-parseint",
   "version": "1.2.4",
   "description": "Electron thermal 58mm printer",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Hubertformin/electron-pos-printer.git"
+    "url": "git+https://github.com/parseint/electron-pos-printer.git"
   },
   "keywords": [
     "electron",
