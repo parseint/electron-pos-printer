@@ -48,7 +48,7 @@ export class PosPrinter {
             }
             // open electron window
             let mainWindow = new BrowserWindow({
-                width: 210,
+                width: 300,
                 height: 1200,
                 show: !!options.preview,
                 webPreferences: {
