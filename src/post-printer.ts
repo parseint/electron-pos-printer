@@ -52,6 +52,7 @@ export class PosPrinter {
                 height: 1200,
                 show: !!options.preview,
                 webPreferences: {
+                    nativeWindowOpen: true,
                     nodeIntegration: true,        // For electron >= 4.0.0
                     contextIsolation: false
                 }
