@@ -5,7 +5,7 @@
 
 # Electron-pos-printer
 This is a fork from https://github.com/Hubertformin/electron-pos-printer
-An electron printer plugin, currently supports 58mm, 
+An electron printer plugin, currently supports 58mm (and 80mm), 
 requires electron >= 4.x.x.
 
 ### Installation

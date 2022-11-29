@@ -85,7 +85,7 @@ var PosPrinter = /** @class */ (function () {
             }
             // open electron window
             var mainWindow = new BrowserWindow({
-                width: 210,
+                width: 310,
                 height: 1200,
                 show: !!options.preview,
                 webPreferences: {
