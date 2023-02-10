@@ -1,6 +1,6 @@
 {
   "name": "electron-pos-printer-parseint",
-  "version": "1.2.10",
+  "version": "1.2.11",
   "description": "Electron thermal 80mm printer",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

@@ -69,6 +69,8 @@ export class PosPrinter {
             }));*/
             if (options.pathTemplate){
                 mainWindow.loadURL(options.pathTemplate)
+            } else if (options.pathTemplateFile){
+                mainWindow.loadFile(options.pathTemplateFile); 
             }else{
                 mainWindow.loadFile(__dirname + '/pos.html');
             }

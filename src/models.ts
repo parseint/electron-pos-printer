@@ -19,6 +19,7 @@ export interface PosPrintOptions {
     silent?: boolean;
     pageSize?: SizeOptions;
     pathTemplate?: string;
+    pathTemplateFile?: string;
 }
 
 
