@@ -9,6 +9,7 @@ export interface PosPrintOptions {
      * @field timeoutPerLine: int，timeout，actual time is ：data.length * timeoutPerLine ms
      * @field silent: To print silently
      * @field pathTemplate: Path to HTML file for custom print options
+     * @field cacheableTemplate: if true, save locally file and use to next print
      */
     copies?: number;
     preview?: boolean;
@@ -19,7 +20,7 @@ export interface PosPrintOptions {
     silent?: boolean;
     pageSize?: SizeOptions;
     pathTemplate?: string;
-    pathTemplateFile?: string;
+    cacheableTemplate?: boolean;
 }
 
 

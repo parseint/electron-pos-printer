@@ -10,6 +10,10 @@ if ((process as any).type == 'renderer') {
 
 
 const {BrowserWindow, ipcMain} = require('electron');
+
+const fs = require("fs");
+const os = require('os');
+
 // ipcMain.on('pos-print', (event, arg)=> {
 //     const {data, options} = JSON.parse(arg);
 //     PosPrinter.print(data, options).then((arg)=>{
@@ -67,14 +71,19 @@ export class PosPrinter {
                 slashes: true,
                 // baseUrl: 'dist'
             }));*/
-            if (options.pathTemplate){
-                mainWindow.loadURL(options.pathTemplate)
-            } else if (options.pathTemplateFile){
-                mainWindow.loadFile(options.pathTemplateFile); 
-            }else{
-                mainWindow.loadFile(__dirname + '/pos.html');
+
+            const cached_template_file_path = os.tmpdir() + "/_cached-template_pos_printer.html";
+            const cached_file_exists = fs.existsSync(cached_template_file_path);
+
+            if (options.cacheableTemplate && cached_file_exists){
+                mainWindow.loadFile(cached_template_file_path);
+            } else {
+                if (options.pathTemplate){
+                    mainWindow.loadURL(options.pathTemplate)
+                } else {
+                    mainWindow.loadFile(__dirname + '/pos.html');
+                }
             }
-            
             
             mainWindow.webContents.on('did-finish-load', async () => {
                 // get system printers
@@ -87,6 +96,19 @@ export class PosPrinter {
                 // }
                 // else start initialize render prcess page
                 await sendIpcMsg('body-init', mainWindow.webContents, options);
+
+                /** CASO O CACHE ESTEJA ATIVO, SALVA A PAGINA HTML */
+                if (options.cacheableTemplate){
+                    fs.writeFile(cached_template_file_path, mainWindow.webContents.getHTML(), (err) => {
+                        if (err) {
+                            console.error("Error on save cached template", err);
+                        } else {
+                            console.log("The cached tamplate was saved");
+                        }
+                      });    
+                }
+                
+
                 /**
                  * Render print data as html in the mainwindow render process
                  *
