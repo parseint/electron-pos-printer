@@ -99,13 +99,21 @@ export class PosPrinter {
 
                 /** CASO O CACHE ESTEJA ATIVO, SALVA A PAGINA HTML */
                 if (options.cacheableTemplate){
-                    fs.writeFile(cached_template_file_path, mainWindow.webContents.getHTML(), (err) => {
-                        if (err) {
-                            console.error("Error on save cached template", err);
-                        } else {
-                            console.log("The cached tamplate was saved");
-                        }
-                    });    
+
+                    mainWindow.webContents.executeJavaScript(`
+                        new XMLSerializer().serializeToString(document.doctype) + 
+                        document.getElementsByTagName('html')[0].outerHTML;`, (result) => {
+                        
+                            // Salve o conteúdo em um arquivo
+                        fs.writeFile( cached_template_file_path , result, (err) => {
+                            if (err) {
+                                console.error(err)
+                            }else{
+                                console.log('Arquivo salvo com sucesso!');
+                            }
+                        });
+                    });
+    
                 }
                 
 

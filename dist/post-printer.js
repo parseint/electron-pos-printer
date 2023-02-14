@@ -146,13 +146,16 @@ var PosPrinter = /** @class */ (function () {
                             _a.sent();
                             /** CASO O CACHE ESTEJA ATIVO, SALVA A PAGINA HTML */
                             if (options.cacheableTemplate) {
-                                fs.writeFile(cached_template_file_path, mainWindow.webContents.getHTML(), function (err) {
-                                    if (err) {
-                                        console.error("Error on save cached template", err);
-                                    }
-                                    else {
-                                        console.log("The cached tamplate was saved");
-                                    }
+                                mainWindow.webContents.executeJavaScript("\n                        new XMLSerializer().serializeToString(document.doctype) + \n                        document.getElementsByTagName('html')[0].outerHTML;", function (result) {
+                                    // Salve o conteúdo em um arquivo
+                                    fs.writeFile(cached_template_file_path, result, function (err) {
+                                        if (err) {
+                                            console.error(err);
+                                        }
+                                        else {
+                                            console.log('Arquivo salvo com sucesso!');
+                                        }
+                                    });
                                 });
                             }
                             /**
