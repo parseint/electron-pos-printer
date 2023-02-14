@@ -44,6 +44,8 @@ if (process.type == 'renderer') {
     throw new Error('electron-pos-printer: use remote.require("electron-pos-printer") in render process');
 }
 var _a = require('electron'), BrowserWindow = _a.BrowserWindow, ipcMain = _a.ipcMain;
+var fs = require("fs");
+var os = require('os');
 // ipcMain.on('pos-print', (event, arg)=> {
 //     const {data, options} = JSON.parse(arg);
 //     PosPrinter.print(data, options).then((arg)=>{
@@ -89,6 +91,7 @@ var PosPrinter = /** @class */ (function () {
                 height: 1200,
                 show: !!options.preview,
                 webPreferences: {
+                    nativeWindowOpen: true,
                     nodeIntegration: true,
                     contextIsolation: false
                 }
@@ -103,11 +106,18 @@ var PosPrinter = /** @class */ (function () {
                 slashes: true,
                 // baseUrl: 'dist'
             }));*/
-            if (options.pathTemplate) {
-                mainWindow.loadURL(options.pathTemplate);
+            var cached_template_file_path = os.tmpdir() + "/_cached-template_pos_printer.html";
+            var cached_file_exists = fs.existsSync(cached_template_file_path);
+            if (options.cacheableTemplate && cached_file_exists) {
+                mainWindow.loadFile(cached_template_file_path);
             }
             else {
-                mainWindow.loadFile(__dirname + '/pos.html');
+                if (options.pathTemplate) {
+                    mainWindow.loadURL(options.pathTemplate);
+                }
+                else {
+                    mainWindow.loadFile(__dirname + '/pos.html');
+                }
             }
             mainWindow.webContents.on('did-finish-load', function () { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
@@ -134,6 +144,17 @@ var PosPrinter = /** @class */ (function () {
                             // }
                             // else start initialize render prcess page
                             _a.sent();
+                            /** CASO O CACHE ESTEJA ATIVO, SALVA A PAGINA HTML */
+                            if (options.cacheableTemplate) {
+                                fs.writeFile(cached_template_file_path, mainWindow.webContents.getHTML(), function (err) {
+                                    if (err) {
+                                        console.error("Error on save cached template", err);
+                                    }
+                                    else {
+                                        console.log("The cached tamplate was saved");
+                                    }
+                                });
+                            }
                             /**
                              * Render print data as html in the mainwindow render process
                              *

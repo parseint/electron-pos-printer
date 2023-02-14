@@ -75,7 +75,7 @@ export class PosPrinter {
             const cached_template_file_path = os.tmpdir() + "/_cached-template_pos_printer.html";
             const cached_file_exists = fs.existsSync(cached_template_file_path);
 
-            if (options.cacheableTemplate && cached_file_exists){
+            if (options.cacheableTemplate && cached_file_exists) {
                 mainWindow.loadFile(cached_template_file_path);
             } else {
                 if (options.pathTemplate){
@@ -105,7 +105,7 @@ export class PosPrinter {
                         } else {
                             console.log("The cached tamplate was saved");
                         }
-                      });    
+                    });    
                 }
                 
 
